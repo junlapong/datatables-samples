@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+         <pattern>[%d{HH:mm:ss.SSS zzz}] %-5level [%t] %logger - %msg%n</pattern>
+      </encoder>
+   </appender>
+
+   <logger name="com.github.dandelion.core.web.handler.cache.HttpHeaderUtils" level="ERROR" />
+   <logger name="com.github.dandelion.datatables" level="INFO" />
+   <logger name="com.github.dandelion" level="INFO" />
+   <logger name="org.thymeleaf" level="ERROR" />
+
+   <root level="INFO">
+      <appender-ref ref="STDOUT" />
+   </root>
+</configuration>
