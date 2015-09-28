@@ -11,9 +11,9 @@
 
    <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdk.version>1.6</jdk.version>
+        <java.version>1.6</java.version>
         <dandelion.version>1.1.0</dandelion.version>
-        <spring.version>3.2.10.RELEASE</spring.version> <!-- 4.2.1.RELEASE -->
+        <spring.version>3.2.10.RELEASE</spring.version>
         <hibernate.version>4.3.11.Final</hibernate.version>
         <hibernate.validator.version>5.2.0.CR1</hibernate.validator.version>
         <hikariCP.version>2.4.1</hikariCP.version>
@@ -48,15 +48,15 @@
         </dependency>
         <dependency>
             <groupId>com.github.dandelion</groupId>
+            <artifactId>datatables-export-itext</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dandelion</groupId>
             <artifactId>datatables-export-poi</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.dandelion</groupId>
             <artifactId>datatables-export-poi-ooxml</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.dandelion</groupId>
-            <artifactId>datatables-export-itext</artifactId>
         </dependency>
 
         <!-- Spring -->
@@ -130,12 +130,17 @@
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
 
-        <!-- UNIT TEST -->
+        <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -146,15 +151,15 @@
     </dependencies>
 
    <build>
-      <finalName>${project.artifactId}</finalName>
+      <finalName>${project.artifactId}-${project.version}</finalName>
       <plugins>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>2.5.1</version>
             <configuration>
-               <source>${jdk.version}</source>
-               <target>${jdk.version}</target>
+               <source>${java.version}</source>
+               <target>${java.version}</target>
                <debug>true</debug>
             </configuration>
          </plugin>

@@ -3,20 +3,25 @@
 
    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
-         <pattern>[%d{HH:mm:ss.SSS zzz}] %-5level [%t] %logger - %msg%n</pattern>
+         <!-- [%d{HH:mm:ss.SSS zzz}] %-5level [%t] %logger{30}.%method\(%F:%L\) - %msg%n -->
+         <pattern>[%d{HH:mm:ss.SSS zzz}] %-5level [%t] %logger{30}.%method\(\) - %msg%n</pattern>
       </encoder>
    </appender>
 
    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
       <appender-ref ref="CONSOLE" />
+	  <includeCallerData>true</includeCallerData>
    </appender>
 
    <logger name="com.github.dandelion.core.web.handler.cache.HttpHeaderUtils" level="ERROR" />
    <logger name="com.github.dandelion.datatables" level="INFO" />
    <logger name="com.github.dandelion" level="INFO" />
+   <logger name="org.hibernate" level="INFO" />
+   <logger name="org.springframework" level="WARN" />
+   <logger name="org.thymeleaf.TemplateEngine" level="WARN" />
    <logger name="org.thymeleaf" level="INFO" />
 
-   <root level="DEBUG">
+   <root level="INFO">
       <appender-ref ref="ASYNC" />
    </root>
 
