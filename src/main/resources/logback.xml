@@ -13,9 +13,9 @@
 
    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
       <appender-ref ref="CONSOLE" />
-      <includeCallerData>true</includeCallerData>
       <queueSize>500</queueSize>
       <discardingThreshold>0</discardingThreshold>
+      <includeCallerData>true</includeCallerData>
    </appender>
 
    <appender name="ASYNCLOG" class="net.logstash.logback.appender.LoggingEventAsyncDisruptorAppender">
@@ -25,7 +25,7 @@
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
             <fileNamePattern>${log-name}.%d{yyyyMMdd}.log</fileNamePattern>
-            <!-- keep 30 days' worth of history -->
+            <!-- keep 90 days' worth of history -->
             <maxHistory>90</maxHistory>
          </rollingPolicy>
          <encoder>
@@ -33,7 +33,8 @@
          </encoder>
       </appender>
    </appender>
-
+   
+   <!--
    <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
       <discriminator>
          <key>logid</key>
@@ -46,6 +47,7 @@
          </appender>
       </sift>
    </appender>
+   -->
 
    <logger name="com.github.dandelion.core.web.handler.cache.HttpHeaderUtils" level="ERROR" />
    <logger name="com.github.dandelion.datatables" level="INFO" />
