@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+   <property name="log-path" value="logs" />
+   <property name="log-name" value="${log-path}/application" />
+
    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
          <!-- [%d{HH:mm:ss.SSS zzz}] %-5level [%t] %logger{30}.%method\(%F:%L\) - %msg%n -->
@@ -10,7 +13,38 @@
 
    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
       <appender-ref ref="CONSOLE" />
-	  <includeCallerData>true</includeCallerData>
+      <includeCallerData>true</includeCallerData>
+      <queueSize>500</queueSize>
+      <discardingThreshold>0</discardingThreshold>
+   </appender>
+
+   <appender name="ASYNCLOG" class="net.logstash.logback.appender.LoggingEventAsyncDisruptorAppender">
+      <waitStrategyType>sleeping</waitStrategyType>
+      <appender class="ch.qos.logback.core.rolling.RollingFileAppender">
+         <file>${log-name}.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${log-name}.%d{yyyyMMdd}.log</fileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>90</maxHistory>
+         </rollingPolicy>
+         <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS zzz}] %-5level [%t] %logger{30}.%method\(\) - %msg%n</pattern>
+         </encoder>
+      </appender>
+   </appender>
+
+   <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
+      <discriminator>
+         <key>logid</key>
+         <defaultValue>unknown</defaultValue>
+      </discriminator>
+      <sift>
+         <appender name="FILE-${logid}" class="ch.qos.logback.core.FileAppender">
+            <file>${log-path}/sift-${logid}.log</file>
+            <append>false</append>
+         </appender>
+      </sift>
    </appender>
 
    <logger name="com.github.dandelion.core.web.handler.cache.HttpHeaderUtils" level="ERROR" />
@@ -23,6 +57,7 @@
 
    <root level="INFO">
       <appender-ref ref="ASYNC" />
+      <appender-ref ref="ASYNCLOG" />
    </root>
 
 </configuration>
